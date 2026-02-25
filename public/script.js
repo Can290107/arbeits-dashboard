@@ -200,4 +200,8 @@ function loadTasks() {
 
     });
 
+    / *Ping alle 5 Minuten* /
+    setInterval(() => {
+    fetch("/api/tasks");
+}, 5 * 60 * 1000); 
 }
