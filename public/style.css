@@ -231,3 +231,29 @@
 .login-card button:hover {
     background: #002b5c;
 }
+
+/* ================= STIMMUNG ================= */
+
+.mood-card {
+    margin-top: 20px;
+}
+
+.mood-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 18px;
+}
+
+.mood-buttons button {
+    font-size: 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.mood-display {
+    font-size: 22px;
+}

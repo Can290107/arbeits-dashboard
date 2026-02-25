@@ -1,9 +1,11 @@
+let currentUser = null;
+
+
 // ===== USER LADEN =====
 async function loadUser() {
-    const res = await fetch("/api/user");
-    const data = await res.json();
-
+  
     if (data.user) {
+        currentUser = data.user.toLowerCase();
         const greeting = document.getElementById("greeting");
         const hour = new Date().getHours();
 
@@ -41,8 +43,7 @@ async function updateClock() {
     document.getElementById("greeting").innerText = greetingText;
 }
 
-updateClock();
-setInterval(updateClock, 1000);
+
 
  
 
@@ -211,12 +212,72 @@ function loadTasks() {
     });
 }
 
-    / == Ping alle 5 Minuten == /
+    // == Ping alle 5 Minuten ==
     setInterval(() => {
     fetch("/api/tasks");
 }, 5 * 60 * 1000);
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadUser();
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadUser();   // Warten bis User gesetzt ist
     loadTasks();
+    loadMoods();        // Danach Stimmungen laden
+
+    updateClock();
+    setInterval(updateClock, 1000);
 });
+
+const colleagues = ["can", "brahim", "ramazan", "philip", "jonas"];
+
+async function loadMoods() {
+    const res = await fetch("/api/moods");
+    const moods = await res.json();
+
+    const container = document.getElementById("moodContainer");
+    container.innerHTML = "";
+
+    colleagues.forEach(name => {
+        const div = document.createElement("div");
+        div.classList.add("mood-user");
+
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+
+        const moodDisplay = document.createElement("span");
+        moodDisplay.classList.add("mood-display");
+
+        const mood = moods[name];
+        if (mood === "good") moodDisplay.textContent = "🟢";
+        else if (mood === "normal") moodDisplay.textContent = "🟡";
+        else if (mood === "bad") moodDisplay.textContent = "🔴";
+        else moodDisplay.textContent = "⚪";
+
+        const buttons = document.createElement("div");
+        buttons.classList.add("mood-buttons");
+
+        if (name === currentUser) {
+            ["good", "normal", "bad"].forEach(state => {
+                const btn = document.createElement("button");
+                btn.textContent =
+                    state === "good" ? "🟢" :
+                    state === "normal" ? "🟡" : "🔴";
+
+                btn.onclick = async () => {
+                    await fetch("/api/moods", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ mood: state })
+                    });
+                    loadMoods();
+                };
+
+                buttons.appendChild(btn);
+            });
+        }
+
+        div.appendChild(nameSpan);
+        div.appendChild(moodDisplay);
+        div.appendChild(buttons);
+
+        container.appendChild(div);
+    });
+}

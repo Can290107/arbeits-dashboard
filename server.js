@@ -73,6 +73,20 @@ app.get("/api/user", (req, res) => {
 
 const DATA_FILE = "tasks.json";
 
+// Stimmungen abrufen
+app.get("/api/moods", requireLogin, (req, res) => {
+    const data = fs.readFileSync(MOOD_FILE);
+    res.json(JSON.parse(data));
+});
+
+// Stimmung setzen
+app.post("/api/moods", requireLogin, (req, res) => {
+    const moods = JSON.parse(fs.readFileSync(MOOD_FILE));
+    moods[req.session.user] = req.body.mood;
+    fs.writeFileSync(MOOD_FILE, JSON.stringify(moods, null, 2));
+    res.json({ status: "ok" });
+});
+
 app.get("/api/tasks", requireLogin, (req, res) => {
     const data = fs.readFileSync(DATA_FILE);
     res.json(JSON.parse(data));
