@@ -212,18 +212,29 @@ function loadTasks() {
     });
 }
 
-    // == Ping alle 5 Minuten ==
+    // == Ping alle 5 Minuten == //
     setInterval(() => {
     fetch("/api/tasks");
 }, 5 * 60 * 1000);
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await loadUser();   // Warten bis User gesetzt ist
+    await loadUser();
     loadTasks();
-    loadMoods();        // Danach Stimmungen laden
+    loadMoods();
 
     updateClock();
     setInterval(updateClock, 1000);
+
+
+    // == Mit Enter Hinzufügen == //
+    const input = document.getElementById("newTask");
+    if (input) {
+        input.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                addTask();
+            }
+        });
+    }
 });
 
 const colleagues = ["can", "brahim", "ramazan", "philip", "jonas"];
