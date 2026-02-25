@@ -72,7 +72,7 @@ async function addTask() {
 }
  
 
-function createTask(text, completed = false, Author = "") {
+function createTask(text, completed = false, Author = "", timestamp = null) {
 
     const li = document.createElement("li");
 
