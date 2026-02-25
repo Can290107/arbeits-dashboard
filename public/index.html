@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Arbeits Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">ARBEITS DASHBOARD</div>
+    <div class="user-info">
+        <span>Can Karanlik</span>
+    </div>
+</header>
+
+<main class="dashboard">
+
+    <!-- ZEIT -->
+    <section class="card time-card">
+        <h2>Status</h2>
+        <div id="greeting"></div>
+        <div id="date"></div>
+        <div id="clock"></div>
+    </section>
+
+    <!-- AUFGABEN -->
+   <section class="card tasks-card">
+    <h2>Heutige Aufgaben</h2>
+
+    <div class="task-input">
+        <input type="text" id="newTask" placeholder="Neue Aufgabe eingeben...">
+        <button onclick="addTask()">Hinzufügen</button>
+    </div>
+
+    <ul id="taskList"></ul>
+</section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

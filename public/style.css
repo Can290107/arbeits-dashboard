@@ -1,0 +1,159 @@
+/* GRUNDLAYOUT */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #eef2f7;
+    color: #1c1c1c;
+    font-size: 18px;
+}
+
+/* HEADER */
+.topbar {
+    background: linear-gradient(90deg, #002b5c, #004080);
+    color: white;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.brand {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.user-info {
+    font-size: 16px;
+}
+
+/* DASHBOARD */
+.dashboard {
+    max-width: 1400px;
+    margin: 60px auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    padding: 0 40px;
+}
+
+/* CARDS */
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* TITLES */
+.card h2 {
+    margin-top: 0;
+    color: #003366;
+}
+
+/* ZEIT */
+#greeting {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#clock {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #004080;
+}
+
+#date {
+    font-size: 18px;
+}
+
+/* AUFGABEN */
+.task-input {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.task-input input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #ccc;
+}
+
+.task-input button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #004080;
+    color: white;
+    font-size: 16px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+}
+
+.task-input button:hover {
+    background-color: #002b5c;
+}
+
+.tasks-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tasks-card li {
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #f4f6fa;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.tasks-card li.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.tasks-card li {
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #f4f6fa;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 0.2s;
+}
+
+.task-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tasks-card li.completed span {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
