@@ -1,10 +1,9 @@
 /* GRUNDLAYOUT */
-body {
+.dashboard-body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
     background-color: #eef2f7;
     color: #1c1c1c;
-    font-size: 18px;
 }
 
 /* HEADER */
