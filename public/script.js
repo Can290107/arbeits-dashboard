@@ -3,22 +3,29 @@ let currentUser = null;
 
 // ===== USER LADEN =====
 async function loadUser() {
-  
-    if (data.user) {
-        currentUser = data.user.toLowerCase();
-        const greeting = document.getElementById("greeting");
-        const hour = new Date().getHours();
+    try {
+        const res = await fetch("/api/user");
+        const data = await res.json();
 
-        let text = "Guten Tag";
-        if (hour < 12) text = "Guten Morgen";
-        else if (hour >= 18) text = "Guten Abend";
+        if (data.user) {
+            currentUser = data.user.toLowerCase();
 
-        greeting.innerText = `${text}, ${data.user}`;
+            const greeting = document.getElementById("greeting");
+            const hour = new Date().getHours();
+
+            let text = "Guten Tag";
+            if (hour < 12) text = "Guten Morgen";
+            else if (hour >= 18) text = "Guten Abend";
+
+            greeting.innerText = `${text}, ${data.user}`;
+        }
+    } catch (error) {
+        console.error("Fehler beim Laden des Users:", error);
     }
 }
 
 // ===== UHR ======
-async function updateClock() {
+function updateClock() {
     const now = new Date();
 
     const date = now.toLocaleDateString("de-DE");
@@ -26,24 +33,9 @@ async function updateClock() {
 
     document.getElementById("date").innerText = "Datum: " + date;
     document.getElementById("clock").innerText = time;
-
-    const res = await fetch("/api/user");
-    const data = await res.json();
-
-    let greetingText = "Guten Tag";
-    const hour = now.getHours();
-
-    if (hour < 12) greetingText = "Guten Morgen";
-    else if (hour >= 18) greetingText = "Guten Abend";
-
-    if (data.user) {
-        greetingText += ", " + data.user;
-    }
-
-    document.getElementById("greeting").innerText = greetingText;
 }
 
-
+  
 
  
 
