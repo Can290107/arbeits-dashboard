@@ -12,7 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: "azubi-dashboard-secret",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        maxAge: null // Session endet beim Schließen des Browsers
+    }
 }));
 
 // Benutzer (später kann das in DB)
