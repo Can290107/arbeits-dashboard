@@ -20,9 +20,9 @@ app.use(session({
 
 // Benutzer (später kann das in DB)
 const users = [
-    { username: "Jonas", password: "Cansu" },
+    { username: "Jonas", password: "28.02" },
     { username: "Can", password: "1234" },
-    { username: "Brahim", password: "1234"},
+    { username: "Brahim", password: "Yarrak20"},
     { username: "Philip", password: "Schnarchnase"},
     { username: "Ramazan", password: "1234"}
 ];
