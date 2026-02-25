@@ -147,17 +147,6 @@ function createTask(text, completed = false) {
 
  
 
-// ENTER Taste zum Hinzufügen
-
-document.getElementById("newTask").addEventListener("keypress", function(e) {
-
-    if (e.key === "Enter") {
-
-        addTask();
-
-    }
-
-});
 
  
 
@@ -208,26 +197,6 @@ function loadTasks() {
     setInterval(() => {
     fetch("/api/tasks");
 }, 5 * 60 * 1000);
-
-document.addEventListener("DOMContentLoaded", async () => {
-    await loadUser();
-    loadTasks();
-    loadMoods();
-    updateClock();
-    setInterval(updateClock, 1000);
-    loadCurrentMood();
-
-
-    // == Mit Enter Hinzufügen == //
-    const input = document.getElementById("newTask");
-    if (input) {
-        input.addEventListener("keypress", function(e) {
-            if (e.key === "Enter") {
-                addTask();
-            }
-        });
-    }
-});
 
 const colleagues = ["Can", "Brahim", "Ramazan", "Philip", "Jonas"];
 
@@ -294,7 +263,7 @@ async function loadCurrentMood() {
     const resUser = await fetch("/api/user");
     const userData = await resUser.json();
 
-    const mood = moods[userData.user?.toLowerCase()];
+    const mood = moods[userData.user];
     currentMoodState = mood;
 
     const moodElement = document.getElementById("currentMood");
@@ -315,6 +284,40 @@ function changeMood(state) {
     });
 }
 
-document.getElementById("currentMood").addEventListener("click", () => {
-    document.getElementById("moodDropdown").classList.toggle("hidden");
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await loadUser();
+    loadTasks();
+    loadMoods();
+    loadCurrentMood();
+
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // 🔁 Auto-Update alle 3 Sekunden
+    setInterval(() => {
+        loadMoods();
+        loadCurrentMood();
+    }, 3000);
+
+    // Enter für neue Aufgabe
+    const input = document.getElementById("newTask");
+    if (input) {
+        input.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                addTask();
+            }
+        });
+    }
+
+    // Klick auf eigene Stimmung
+    const moodBtn = document.getElementById("currentMood");
+    if (moodBtn) {
+        moodBtn.addEventListener("click", () => {
+            document.getElementById("moodDropdown").classList.toggle("hidden");
+        });
+    }
+
 });
