@@ -123,6 +123,7 @@ function createTask(text, completed = false, Author = "") {
     leftDiv.appendChild(authorSpan);
 
     li.appendChild(leftDiv);
+    li.appendChild(timeSpan);
     li.appendChild(deleteBtn);
 
     document.getElementById("taskList").appendChild(li);
