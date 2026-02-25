@@ -1,3 +1,20 @@
+// ===== USER LADEN =====
+async function loadUser() {
+    const res = await fetch("/api/user");
+    const data = await res.json();
+
+    if (data.user) {
+        const greeting = document.getElementById("greeting");
+        const hour = new Date().getHours();
+
+        let text = "Guten Tag";
+        if (hour < 12) text = "Guten Morgen";
+        else if (hour >= 18) text = "Guten Abend";
+
+        greeting.innerText = `${text}, ${data.user}`;
+    }
+}
+
 // ===== UHR ======
 function updateClock() {
     const now = new Date();
@@ -199,9 +216,10 @@ function loadTasks() {
         createTask(task.text, task.completed);
 
     });
+}
 
     / *Ping alle 5 Minuten* /
     setInterval(() => {
     fetch("/api/tasks");
-}, 5 * 60 * 1000); 
-}
+}, 5 * 60 * 1000);
+
