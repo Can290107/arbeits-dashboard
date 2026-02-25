@@ -50,7 +50,7 @@ app.get("/logout", (req, res) => {
 
 
 // Statische Dateien IMMER frei zugänglich (CSS, JS, Bilder)
-app.use(express.static("public"));
+app.use(express.static("public", { index: false }));
 
 // Middleware Schutz
 function requireLogin(req, res, next) {
