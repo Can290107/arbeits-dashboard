@@ -8,7 +8,7 @@ async function loadUser() {
         const data = await res.json();
 
         if (data.user) {
-            currentUser = data.user.toLowerCase();
+            currentUser = data.user();
 
             const greeting = document.getElementById("greeting");
             const hour = new Date().getHours();
