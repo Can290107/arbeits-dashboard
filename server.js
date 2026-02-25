@@ -40,6 +40,12 @@ app.get("/logout", (req, res) => {
     res.redirect("/login.html");
 });
 
+
+// Login-Seite öffentlich zugänglich
+app.get("/login.html", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
 // Middleware Schutz
 function requireLogin(req, res, next) {
     if (!req.session.user) {
@@ -48,12 +54,8 @@ function requireLogin(req, res, next) {
     next();
 }
 
-app.use(express.static("public"));
-
-// Geschützte Startseite
-app.get("/", requireLogin, (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+// Alles andere im public-Ordner schützen
+app.use(requireLogin, express.static("public"));
 
 // User Info API
 app.get("/api/user", (req, res) => {
