@@ -13,8 +13,10 @@ app.use(session({
     secret: "azubi-dashboard-secret",
     resave: false,
     saveUninitialized: false,
+    rolling: true,
     cookie: {
-        maxAge: null // Session endet beim Schließen des Browsers
+        maxAge: 30 * 60 * 1000,
+        expires: false   // Session-Cookie
     }
 }));
 
