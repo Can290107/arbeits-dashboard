@@ -3,6 +3,13 @@ const fs = require("fs");
 const session = require("express-session");
 const path = require("path");
 
+const DATA_FILE = "tasks.json";
+const MOOD_FILE = "moods.json";
+// Datei automatisch erstellen, falls sie fehlt
+if (!fs.existsSync(MOOD_FILE)) {
+    fs.writeFileSync(MOOD_FILE, "{}");
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -71,7 +78,7 @@ app.get("/api/user", (req, res) => {
     res.json({ user: req.session.user });
 });
 
-const DATA_FILE = "tasks.json";
+
 
 // Stimmungen abrufen
 app.get("/api/moods", requireLogin, (req, res) => {
