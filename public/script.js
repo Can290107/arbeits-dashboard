@@ -65,7 +65,7 @@ async function addTask() {
 
  
 
-function createTask(text, completed = false, author = "") {
+function createTask(text, completed = false, Author = "") {
 
     const li = document.createElement("li");
 
@@ -80,7 +80,7 @@ function createTask(text, completed = false, author = "") {
     span.textContent = text;
 
     const authorSpan = document.createElement("small");
-    authorSpan.textContent = " (" + author + ")";
+    authorSpan.textContent = " (" + Author + ")";
     authorSpan.style.color = "#666";
 
     if (completed) {
