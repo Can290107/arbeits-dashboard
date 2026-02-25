@@ -275,6 +275,10 @@
 
 /* Hover Effekt */
 .mood-user {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    align-items: center;
+    margin-bottom: 12px;
     padding: 6px 10px;
     border-radius: 8px;
     transition: 0.2s ease;
@@ -318,4 +322,11 @@
 
 .mood-user span:first-child {
     min-width: 100px;   /* sorgt dafür dass alle Namen gleich breit sind */
+}
+
+.mood-display {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
 }
