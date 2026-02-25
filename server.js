@@ -17,8 +17,11 @@ app.use(session({
 
 // Benutzer (später kann das in DB)
 const users = [
-    { username: "jonas", password: "1234" },
-    { username: "can", password: "1234" }
+    { username: "Jonas", password: "Cansu" },
+    { username: "Can", password: "1234" },
+    { username: "Brahim", password: "1234"},
+    { username: "Philip", password: "Schnarchnase"},
+    { username: "Ramazan", password: "1234"}
 ];
 
 // Login Route
