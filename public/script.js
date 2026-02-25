@@ -43,154 +43,122 @@ function updateClock() {
 
  
 
-function addTask() {
+async function addTask() {
 
     const input = document.getElementById("newTask");
-
     const text = input.value.trim();
-
- 
-
     if (text === "") return;
 
- 
-
-    createTask(text);
-
-    saveTasks();
-
- 
+    await fetch("/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            text: text,
+            completed: false,
+            author: currentUser
+        })
+    });
 
     input.value = "";
-
+    loadTasks();
 }
 
  
 
-function createTask(text, completed = false) {
+function createTask(text, completed = false, author = "") {
 
     const li = document.createElement("li");
 
- 
-
     const leftDiv = document.createElement("div");
-
     leftDiv.classList.add("task-left");
 
- 
-
     const checkbox = document.createElement("input");
-
     checkbox.type = "checkbox";
-
     checkbox.checked = completed;
 
- 
-
     const span = document.createElement("span");
-
     span.textContent = text;
 
- 
+    const authorSpan = document.createElement("small");
+    authorSpan.textContent = " (" + author + ")";
+    authorSpan.style.color = "#666";
 
     if (completed) {
-
         li.classList.add("completed");
-
     }
 
- 
-
-    checkbox.addEventListener("change", () => {
-
-        li.classList.toggle("completed");
-
-        saveTasks();
-
+    checkbox.addEventListener("change", async () => {
+        await updateTaskStatus(text, checkbox.checked);
     });
-
- 
-
-    leftDiv.appendChild(checkbox);
-
-    leftDiv.appendChild(span);
-
- 
 
     const deleteBtn = document.createElement("button");
-
     deleteBtn.textContent = "X";
-
     deleteBtn.classList.add("delete-btn");
 
- 
-
-    deleteBtn.onclick = () => {
-
-        li.remove();
-
-        saveTasks();
-
+    deleteBtn.onclick = async () => {
+        await deleteTask(text);
     };
 
- 
+    leftDiv.appendChild(checkbox);
+    leftDiv.appendChild(span);
+    leftDiv.appendChild(authorSpan);
 
     li.appendChild(leftDiv);
-
     li.appendChild(deleteBtn);
 
- 
-
     document.getElementById("taskList").appendChild(li);
-
 }
 
- 
 
 
- 
+async function loadTasks() {
+    const res = await fetch("/api/tasks");
+    const tasks = await res.json();
 
-// ===== LocalStorage =====
-
- 
-
-function saveTasks() {
-
-    const tasks = [];
-
- 
-
-    document.querySelectorAll("#taskList li").forEach(li => {
-
-        const text = li.querySelector("span").textContent;
-
-        const completed = li.classList.contains("completed");
-
- 
-
-        tasks.push({ text, completed });
-
-    });
-
- 
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-}
-
- 
-
-function loadTasks() {
-
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
- 
+    const list = document.getElementById("taskList");
+    list.innerHTML = "";
 
     tasks.forEach(task => {
-
-        createTask(task.text, task.completed);
-
+        createTask(task.text, task.completed, task.author);
     });
+}
+ 
+
+async function updateTaskStatus(text, completed) {
+
+    const res = await fetch("/api/tasks");
+    const tasks = await res.json();
+
+    const updated = tasks.map(task => {
+        if (task.text === text) {
+            task.completed = completed;
+        }
+        return task;
+    });
+
+    await fetch("/api/tasks", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated)
+    });
+
+    loadTasks();
+}
+
+async function deleteTask(text) {
+
+    const res = await fetch("/api/tasks");
+    const tasks = await res.json();
+
+    const filtered = tasks.filter(task => task.text !== text);
+
+    await fetch("/api/tasks", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(filtered)
+    });
+
+    loadTasks();
 }
 
     // == Ping alle 5 Minuten == //
@@ -319,5 +287,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("moodDropdown").classList.toggle("hidden");
         });
     }
+
+    // Aufgaben 
+    setInterval(loadTasks, 3000);
 
 });
