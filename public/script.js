@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-const colleagues = ["can", "brahim", "ramazan", "philip", "jonas"];
+const colleagues = ["Can", "Brahim", "Ramazan", "Philip", "Jonas"];
 
 async function loadMoods() {
     const res = await fetch("/api/moods");
