@@ -213,9 +213,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadUser();
     loadTasks();
     loadMoods();
-
     updateClock();
     setInterval(updateClock, 1000);
+    loadCurrentMood();
 
 
     // == Mit Enter Hinzufügen == //
@@ -284,3 +284,37 @@ async function loadMoods() {
         container.appendChild(div);
     });
 }
+
+let currentMoodState = null;
+
+async function loadCurrentMood() {
+    const res = await fetch("/api/moods");
+    const moods = await res.json();
+
+    const resUser = await fetch("/api/user");
+    const userData = await resUser.json();
+
+    const mood = moods[userData.user?.toLowerCase()];
+    currentMoodState = mood;
+
+    const moodElement = document.getElementById("currentMood");
+
+    if (mood === "good") moodElement.textContent = "😊";
+    else if (mood === "normal") moodElement.textContent = "😐";
+    else if (mood === "bad") moodElement.textContent = "😞";
+}
+
+function changeMood(state) {
+    fetch("/api/moods", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mood: state })
+    }).then(() => {
+        loadCurrentMood();
+        document.getElementById("moodDropdown").classList.add("hidden");
+    });
+}
+
+document.getElementById("currentMood").addEventListener("click", () => {
+    document.getElementById("moodDropdown").classList.toggle("hidden");
+});

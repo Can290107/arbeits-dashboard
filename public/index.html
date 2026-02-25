@@ -23,6 +23,14 @@
         <div id="greeting"></div>
         <div id="date"></div>
         <div id="clock"></div>
+
+        <!-- STIMMUNG -->
+    <div id="currentMood" class="clickable-mood">😊</div>
+    <div id="moodDropdown" class="mood-dropdown hidden">
+        <div onclick="changeMood('good')">😊 Gut</div>
+        <div onclick="changeMood('normal')">😐 Normal</div>
+        <div onclick="changeMood('bad')">😞 Schlecht</div>
+    </div>
     </section>
 
     <!-- AUFGABEN -->
@@ -42,7 +50,7 @@
         <h2>Team Stimmung</h2>
         <div id="moodContainer"></div>
     </section>
-    
+
 </main>
 
 <script src="script.js"></script>

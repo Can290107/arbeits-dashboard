@@ -43,7 +43,7 @@ app.post("/login", (req, res) => {
 
     if (user) {
         req.session.user = user.username;
-        res.redirect("/");
+        res.redirect("/mood.html");
     } else {
         res.send("Login fehlgeschlagen");
     }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Stimmung wählen</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+
+<div class="login-card">
+    <h2>Wie fühlst du dich heute?</h2>
+
+    <div class="mood-selection">
+        <button onclick="setMood('good')">😊 Gut</button>
+        <button onclick="setMood('normal')">😐 Normal</button>
+        <button onclick="setMood('bad')">😞 Schlecht</button>
+    </div>
+</div>
+
+<script>
+async function setMood(mood) {
+    await fetch("/api/moods", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mood })
+    });
+
+    window.location.href = "/";
+}
+</script>
+
+</body>
+</html>

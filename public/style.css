@@ -257,3 +257,31 @@
 .mood-display {
     font-size: 22px;
 }
+
+.clickable-mood {
+    font-size: 28px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.mood-dropdown {
+    margin-top: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 10px;
+    width: 150px;
+}
+
+.mood-dropdown div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.mood-dropdown div:hover {
+    background: #f0f0f0;
+}
+
+.hidden {
+    display: none;
+}
