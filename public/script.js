@@ -206,10 +206,11 @@ async function loadMoods() {
         moodDisplay.classList.add("mood-display");
 
         const mood = moods[name];
-        if (mood === "good") moodDisplay.textContent = "🟢";
-        else if (mood === "normal") moodDisplay.textContent = "🟡";
-        else if (mood === "bad") moodDisplay.textContent = "🔴";
-        else moodDisplay.textContent = "⚪";
+        moodDisplay.classList.remove("mood-good", "mood-normal", "mood-bad", "mood-none");
+        if (mood === "good") moodDisplay.classList.add("mood-good");
+        else if (mood === "normal") moodDisplay.classList.add("mood-normal");
+        else if (mood === "bad") moodDisplay.classList.add("mood-bad");
+        else moodDisplay.classList.add("mood-none");
 
         const buttons = document.createElement("div");
         buttons.classList.add("mood-buttons");

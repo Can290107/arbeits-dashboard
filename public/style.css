@@ -238,13 +238,6 @@
     margin-top: 20px;
 }
 
-.mood-user {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
 
 .mood-buttons button {
     font-size: 20px;
@@ -254,8 +247,45 @@
     margin-left: 8px;
 }
 
+/* ===== Runde Mood Badges ===== */
+
 .mood-display {
-    font-size: 20px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    transition: 0.2s ease;
+}
+
+/* Farben */
+.mood-good {
+    background: #27ae60;
+}
+
+.mood-normal {
+    background: #f1c40f;
+}
+
+.mood-bad {
+    background: #e74c3c;
+}
+
+.mood-none {
+    background: #bdc3c7;
+}
+
+/* Hover Effekt */
+.mood-user {
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: 0.2s ease;
+}
+
+.mood-user:hover {
+    background: rgba(0, 64, 128, 0.08);
+}
+
+.mood-user:hover .mood-display {
+    transform: scale(1.2);
 }
 
 .clickable-mood {
