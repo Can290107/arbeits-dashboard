@@ -49,10 +49,8 @@ app.get("/logout", (req, res) => {
 });
 
 
-// Login-Seite öffentlich zugänglich
-app.get("/login.html", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "login.html"));
-});
+// Statische Dateien IMMER frei zugänglich (CSS, JS, Bilder)
+app.use(express.static("public"));
 
 // Middleware Schutz
 function requireLogin(req, res, next) {
@@ -62,8 +60,10 @@ function requireLogin(req, res, next) {
     next();
 }
 
-// Alles andere im public-Ordner schützen
-app.use(requireLogin, express.static("public"));
+// Startseite schützen
+app.get("/", requireLogin, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 // User Info API
 app.get("/api/user", (req, res) => {
