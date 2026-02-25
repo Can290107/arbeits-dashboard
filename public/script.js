@@ -49,20 +49,27 @@ async function addTask() {
     const text = input.value.trim();
     if (text === "") return;
 
+    const now = new Date();
+
+    const timestamp = {
+        date: now.toLocaleDateString("de-DE"),
+        time: now.toLocaleTimeString("de-DE")
+    };
+
     await fetch("/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             text: text,
             completed: false,
-            author: currentUser
+            author: currentUser,
+            timestamp: timestamp
         })
     });
 
     input.value = "";
     loadTasks();
 }
-
  
 
 function createTask(text, completed = false, Author = "") {
@@ -86,6 +93,14 @@ function createTask(text, completed = false, Author = "") {
 
     authorSpan.textContent = " (" + formattedAuthor + ")";
     authorSpan.style.color = "#666";
+
+    const timeSpan = document.createElement("div");
+    timeSpan.style.fontSize = "12px";
+    timeSpan.style.color = "#888";
+
+    if (timestamp) {
+        timeSpan.textContent = `${timestamp.date} – ${timestamp.time}`;
+    }
 
     if (completed) {
         li.classList.add("completed");
@@ -123,7 +138,7 @@ async function loadTasks() {
     list.innerHTML = "";
 
     tasks.forEach(task => {
-        createTask(task.text, task.completed, task.author);
+        createTask(task.text, task.completed, task.author, task.timestamp);
     });
 }
  
