@@ -16,39 +16,32 @@ async function loadUser() {
 }
 
 // ===== UHR ======
-function updateClock() {
+async function updateClock() {
     const now = new Date();
 
-    const date = now.toLocaleDateString("de-DE")
-    const time = now.toLocaleTimeString("de-DE")
+    const date = now.toLocaleDateString("de-DE");
+    const time = now.toLocaleTimeString("de-DE");
 
-    document.getElementById("date").innerText = "Datum" + date;
+    document.getElementById("date").innerText = "Datum: " + date;
     document.getElementById("clock").innerText = time;
 
-    updateGreeting(now.getHours());
+    const res = await fetch("/api/user");
+    const data = await res.json();
+
+    let greetingText = "Guten Tag";
+    const hour = now.getHours();
+
+    if (hour < 12) greetingText = "Guten Morgen";
+    else if (hour >= 18) greetingText = "Guten Abend";
+
+    if (data.user) {
+        greetingText += ", " + data.user;
+    }
+
+    document.getElementById("greeting").innerText = greetingText;
 }
-function updateGreeting(hour) {
-
-    let greeting;
-
- 
-
-    if (hour < 12) greeting = "Guten Morgen ☀";
-
-    else if (hour < 18) greeting = "Guten Tag 👋";
-
-    else greeting = "Guten Abend 🌙";
-
- 
-
-    document.getElementById("greeting").innerText = greeting;
-
-}
-
- 
 
 updateClock();
-
 setInterval(updateClock, 1000);
 
  
