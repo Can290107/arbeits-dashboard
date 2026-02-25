@@ -242,9 +242,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    font-size: 18px;
+    margin-bottom: 12px;
 }
+
 
 .mood-buttons button {
     font-size: 20px;
@@ -255,7 +255,7 @@
 }
 
 .mood-display {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .clickable-mood {
@@ -284,4 +284,8 @@
 
 .hidden {
     display: none;
+}
+
+.mood-user span:first-child {
+    min-width: 100px;   /* sorgt dafür dass alle Namen gleich breit sind */
 }
