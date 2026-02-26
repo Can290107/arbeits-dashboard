@@ -5,6 +5,7 @@ const path = require("path");
 
 const DATA_FILE = "tasks.json";
 const MOOD_FILE = "moods.json";
+const EVENTS_FILE = "events.json";
 // Datei automatisch erstellen, falls sie fehlt
 if (!fs.existsSync(MOOD_FILE)) {
     fs.writeFileSync(MOOD_FILE, "{}");
@@ -12,6 +13,10 @@ if (!fs.existsSync(MOOD_FILE)) {
 
 if (!fs.existsSync(DATA_FILE)) {
     fs.writeFileSync(DATA_FILE, "[]");
+}
+
+if (!fs.existsSync(EVENTS_FILE)) {
+    fs.writeFileSync(EVENTS_FILE, "[]");
 }
 
 const app = express();
@@ -113,6 +118,31 @@ app.post("/api/tasks", requireLogin, (req, res) => {
 app.put("/api/tasks", requireLogin, (req, res) => {
     fs.writeFileSync(DATA_FILE, JSON.stringify(req.body, null, 2));
     res.json({ status: "updated" });
+});
+
+
+// ===== EVENTS API =====
+
+// Alle Events abrufen
+app.get("/api/events", requireLogin, (req, res) => {
+    const data = fs.readFileSync(EVENTS_FILE);
+    res.json(JSON.parse(data));
+});
+
+// Neues Event speichern
+app.post("/api/events", requireLogin, (req, res) => {
+    const events = JSON.parse(fs.readFileSync(EVENTS_FILE));
+    events.push(req.body);
+    fs.writeFileSync(EVENTS_FILE, JSON.stringify(events, null, 2));
+    res.json({ status: "ok" });
+});
+
+// Event löschen
+app.delete("/api/events/:id", requireLogin, (req, res) => {
+    const events = JSON.parse(fs.readFileSync(EVENTS_FILE));
+    const filtered = events.filter(event => event.id !== req.params.id);
+    fs.writeFileSync(EVENTS_FILE, JSON.stringify(filtered, null, 2));
+    res.json({ status: "deleted" });
 });
 
 app.listen(PORT, () => {

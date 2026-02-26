@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalender - Arbeits Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+</head>
+
+<body class="dashboard-body">
+
+<header class="topbar">
+    <div class="brand">ARBEITS DASHBOARD</div>
+</header>
+
+<main class="dashboard" style="grid-template-columns: 1fr;">
+    <section class="card">
+        <h2>Team Kalender</h2>
+        <div id="calendar"></div>
+    </section>
+</main>
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+
+    const calendarEl = document.getElementById("calendar");
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        locale: "de",
+        height: "auto",
+
+        dateClick: async function(info) {
+            const title = prompt("Titel für Termin am " + info.dateStr);
+            if (!title) return;
+
+            await fetch("/api/events", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: crypto.randomUUID(),
+                    title: title,
+                    date: info.dateStr
+                })
+            });
+
+            calendar.refetchEvents();
+        },
+
+        events: async function(fetchInfo, successCallback) {
+            const res = await fetch("/api/events");
+            const events = await res.json();
+            successCallback(events);
+        }
+    });
+
+    calendar.render();
+});
+</script>
+
+</body>
+</html>
