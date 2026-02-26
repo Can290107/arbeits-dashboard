@@ -6,7 +6,7 @@
     color: #1c1c1c;
 }
 
-/* HEADER */
+/* Leiste Oben */
 .topbar {
     background: linear-gradient(90deg, #002b5c, #004080);
     color: white;
@@ -33,7 +33,7 @@
     padding: 0 40px;
 }
 
-/* CARDS */
+/* Karten */
 .card {
     background: white;
     padding: 40px;
@@ -41,7 +41,7 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* TITLES */
+/* Titel */
 .card h2 {
     margin-top: 0;
     color: #003366;
@@ -122,16 +122,6 @@
     cursor: pointer;
 }
 
-.tasks-card li {
-    padding: 15px;
-    margin-bottom: 10px;
-    background: #f4f6fa;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: 0.2s;
-}
 
 .task-left {
     display: flex;
@@ -144,14 +134,7 @@
     opacity: 0.6;
 }
 
-.delete-btn {
-    background: red;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-}
+
 
 /* ================= LOGIN SEITE ================= */
 
@@ -243,13 +226,13 @@
     margin-left: 8px;
 }
 
-/* ===== Runde Mood Badges ===== */
+/* ===== Runde Mood Dinger ===== */
 
 .mood-display {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    display: inline-block;   /* WICHTIG */
+    display: inline-block;   
 }
 
 /* Farben */
@@ -317,12 +300,7 @@
 }
 
 .mood-user span:first-child {
-    min-width: 100px;   /* sorgt dafür dass alle Namen gleich breit sind */
+    min-width: 100px;   /* alle Namen gleich breit */
 }
 
-.mood-display {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: inline-block;
-}
+

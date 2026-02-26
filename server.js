@@ -10,6 +10,10 @@ if (!fs.existsSync(MOOD_FILE)) {
     fs.writeFileSync(MOOD_FILE, "{}");
 }
 
+if (!fs.existsSync(DATA_FILE)) {
+    fs.writeFileSync(DATA_FILE, "[]");
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 

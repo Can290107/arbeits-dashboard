@@ -59,7 +59,8 @@ async function addTask() {
     await fetch("/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+       body: JSON.stringify({
+            id: crypto.randomUUID(),
             text: text,
             completed: false,
             author: currentUser,
@@ -181,10 +182,7 @@ async function deleteTask(text) {
     loadTasks();
 }
 
-    // == Ping alle 5 Minuten == //
-    setInterval(() => {
-    fetch("/api/tasks");
-}, 5 * 60 * 1000);
+
 
 const colleagues = ["Can", "Brahim", "Ramazan", "Philip", "Jonas"];
 
@@ -246,20 +244,20 @@ async function loadMoods() {
 let currentMoodState = null;
 
 async function loadCurrentMood() {
+    if (!currentUser) return;
+
     const res = await fetch("/api/moods");
     const moods = await res.json();
 
-    const resUser = await fetch("/api/user");
-    const userData = await resUser.json();
-
-    const mood = moods[userData.user];
-    currentMoodState = mood;
+    const mood = moods[currentUser];
 
     const moodElement = document.getElementById("currentMood");
+    if (!moodElement) return;
 
     if (mood === "good") moodElement.textContent = "😊";
     else if (mood === "normal") moodElement.textContent = "😐";
     else if (mood === "bad") moodElement.textContent = "😞";
+    else moodElement.textContent = "😊"; // fallback
 }
 
 function changeMood(state) {
@@ -285,11 +283,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     updateClock();
     setInterval(updateClock, 1000);
 
-    // 🔁 Auto-Update alle 3 Sekunden
+    // Auto-Update alle 5 Sekunden
     setInterval(() => {
+        loadTasks();
         loadMoods();
-        loadCurrentMood();
-    }, 3000);
+    }, 5000);
 
     // Enter für neue Aufgabe
     const input = document.getElementById("newTask");
@@ -309,7 +307,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Aufgaben 
-    setInterval(loadTasks, 3000);
-
+    
 });
