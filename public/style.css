@@ -303,4 +303,20 @@
     min-width: 100px;   /* alle Namen gleich breit */
 }
 
+/* ===== Navigation ===== */
 
+.topnav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.nav-link:hover {
+    opacity: 0.7;
+}
